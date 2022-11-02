@@ -8,7 +8,8 @@ const ActionButton = ({ imgUrl, handleClick, restStyles}) => {
         ${styles.gameMoveBox}
         ${styles.flexCenter}
         ${styles.glassEffect}
-        ${restStyles}`}>
+        ${restStyles}`}
+        onClick={handleClick}>
         <img
           src={imgUrl}
           alt="action_img"

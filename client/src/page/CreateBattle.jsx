@@ -15,6 +15,9 @@ const CreateBattle = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if(gameData?.activeBattle?.battleStatus === 1) {
+      return navigate(`/battle/${gameData.activeBattle.name}`)
+    }
     if(gameData?.activeBattle?.battleStatus === 0) {
       setWaitBattle(true);
     }
@@ -25,11 +28,13 @@ const CreateBattle = () => {
       return null;
 
     try {
-      await contract.createBattle(battleName);
+      await contract.createBattle(battleName, {
+        gasLimit: 350_000
+      });
 
-      // setWaitBattle(true);
+      setWaitBattle(true);
     } catch (error) {
-
+      setErrorMessage(error);
     }
   }
 

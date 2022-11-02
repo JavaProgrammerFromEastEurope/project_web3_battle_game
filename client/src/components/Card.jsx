@@ -13,7 +13,9 @@ const img2 = generateRandomCardImage();
 const Card = ({card, title, cardRef, playerTwo, restStyles}) => {
   return (
     <Tilt>
-      <div className={`${styles.cardContainer} ${restStyles}`}>
+      <div
+        ref={cardRef}
+        className={`${styles.cardContainer} ${restStyles}`}>
         <img
           src={playerTwo ? img2 : img1}
           alt="card"
@@ -30,7 +32,7 @@ const Card = ({card, title, cardRef, playerTwo, restStyles}) => {
           className={`${styles.cardPointContainer}
           sm:right-[14.2%] right-[15%] ${styles.flexCenter}`}>
           <p className={`${styles.cardPoint} text-red-700`}>
-            {card.att}
+            {card.def}
           </p>
         </div>
         <div className={`

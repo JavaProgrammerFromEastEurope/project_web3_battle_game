@@ -7,12 +7,25 @@ import { alertIcon, gameRules } from '../assets';
 import styles from '../styles';
 
 const GameInfo = () => {
-  const { contract, gameData, setShowAlert } = useGlobalContext();
+  const { contract, gameData, setShowAlert, setErrorMessage } = useGlobalContext();
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const navigate = useNavigate();
 
   const handleBattleExit = async () => {
+    const battleName = gameData.activeBattle.name;
 
+    try {
+      await contract.quitBattle(battleName, {
+        gasLimit: 350_000
+      });
+
+      setShowAlert({
+          status: true,
+          type: 'info',
+          message: `You're quitting the ${battleName}`})
+    } catch (error) {
+      setErrorMessage(error);
+    }
   }
 
   return (
@@ -57,7 +70,7 @@ const GameInfo = () => {
           <div className='mt-3'>
             {gameRules.map((rule, index) => (
               <p
-                // key={`game-rule-index`}
+                key={`game-rule-${index}`}
                 className={styles.gameInfoText}>
                 <span className='font-bold'>
                   {index + 1}
